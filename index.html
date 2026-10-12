@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b18" />
+  <meta name="description" content="A neon, modern Tic-Tac-Toe game. Challenge the AI or play with a friend." />
+  <title>Neon Tic-Tac-Toe — Play the Future</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Neon Tic-Tac-Toe home">
+        <span class="brand-mark"><span>×</span><span>○</span></span>
+        <span>NEON<span class="brand-light">PLAY</span></span>
+      </a>
+      <div class="top-pill"><span class="live-dot"></span> ARCADE MODE <span class="pill-divider"></span> <span id="headerMode">READY TO PLAY</span></div>
+      <button id="soundToggle" class="icon-button" aria-label="Toggle sound" title="Toggle sound">♫ <span id="soundState">ON</span></button>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> THE CLASSIC, REIMAGINED <span class="eyebrow-line"></span></div>
+      <h1>Think fast.<br><span>Make your move.</span></h1>
+      <p class="hero-copy">A little strategy. A little rivalry. A whole lot of fun.</p>
+    </section>
+
+    <section class="game-layout">
+      <aside class="panel controls-panel">
+        <div class="panel-heading"><div class="heading-icon">⚡</div><div><h2>Game setup</h2><p>Choose your battle</p></div></div>
+        <div class="control-group">
+          <label class="section-label">PLAY MODE</label>
+          <div class="mode-switch" role="group" aria-label="Game mode">
+            <button class="mode-option active" data-mode="ai"><span>🤖</span><span>VS AI</span></button>
+            <button class="mode-option" data-mode="human"><span>👥</span><span>2 PLAYERS</span></button>
+          </div>
+        </div>
+        <div id="difficultyGroup" class="control-group">
+          <div class="label-row"><label class="section-label">AI DIFFICULTY</label><span id="difficultyValue" class="tiny-badge">EXPERT</span></div>
+          <div class="difficulty-list">
+            <button class="difficulty-option" data-difficulty="easy"><span class="difficulty-emoji">🌱</span><span class="difficulty-text"><b>Beginner</b><small>Just warming up</small></span><span class="difficulty-radio"></span></button>
+            <button class="difficulty-option" data-difficulty="medium"><span class="difficulty-emoji">🔥</span><span class="difficulty-text"><b>Intermediate</b><small>A worthy rival</small></span><span class="difficulty-radio"></span></button>
+            <button class="difficulty-option selected" data-difficulty="hard"><span class="difficulty-emoji">🧠</span><span class="difficulty-text"><b>Expert</b><small>Bring your best</small></span><span class="difficulty-radio"></span></button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="section-label">QUICK ACTIONS</label>
+          <button id="newGameBtn" class="primary-button"><span>↻</span> New game <span class="button-arrow">↗</span></button>
+          <button id="resetStatsBtn" class="secondary-button"><span>▤</span> Reset statistics</button>
+        </div>
+        <div class="tip-card"><div class="tip-icon">✦</div><div><b>Pro tip</b><p>Own the center, watch for forks, and never leave a winning line open.</p></div></div>
+      </aside>
+
+      <section class="panel board-panel">
+        <div class="board-topline">
+          <div><span class="section-label">CURRENT MATCH</span><h2 id="matchTitle">Your move, legend.</h2></div>
+          <div id="turnBadge" class="turn-badge"><span class="turn-dot x-dot"></span> YOUR TURN</div>
+        </div>
+        <div class="player-strip">
+          <div id="playerXCard" class="player-card active-player"><div class="player-symbol x-symbol">×</div><div class="player-meta"><b id="playerXName">YOU</b><small>PLAYER ONE</small></div><span class="player-score" id="playerXScore">0</span></div>
+          <div class="versus">VS</div>
+          <div id="playerOCard" class="player-card"><div class="player-symbol o-symbol">○</div><div class="player-meta"><b id="playerOName">AI BOT</b><small>PLAYER TWO</small></div><span class="player-score" id="playerOScore">0</span></div>
+        </div>
+        <div class="board-wrap">
+          <div class="board-glow"></div>
+          <div id="board" class="board" role="grid" aria-label="Tic-Tac-Toe board">
+            <button class="cell" data-index="0" role="gridcell" aria-label="Top left, empty"></button>
+            <button class="cell" data-index="1" role="gridcell" aria-label="Top middle, empty"></button>
+            <button class="cell" data-index="2" role="gridcell" aria-label="Top right, empty"></button>
+            <button class="cell" data-index="3" role="gridcell" aria-label="Middle left, empty"></button>
+            <button class="cell" data-index="4" role="gridcell" aria-label="Center, empty"></button>
+            <button class="cell" data-index="5" role="gridcell" aria-label="Middle right, empty"></button>
+            <button class="cell" data-index="6" role="gridcell" aria-label="Bottom left, empty"></button>
+            <button class="cell" data-index="7" role="gridcell" aria-label="Bottom middle, empty"></button>
+            <button class="cell" data-index="8" role="gridcell" aria-label="Bottom right, empty"></button>
+          </div>
+        </div>
+        <div class="board-footer"><span class="keyboard-hint"><kbd>CLICK</kbd> A TILE TO MAKE YOUR MOVE</span><span id="gameStatus" class="status-message"><span class="status-star">✦</span> Ready when you are</span></div>
+      </section>
+
+      <aside class="panel stats-panel">
+        <div class="panel-heading"><div class="heading-icon pink-icon">◈</div><div><h2>Your stats</h2><p>Every move counts</p></div></div>
+        <div class="stat-feature"><div class="stat-feature-top"><span>WIN RATE</span><span class="trend-icon">↗</span></div><div class="winrate-line"><strong id="winRate">0<span>%</span></strong><span id="winRateCaption">Keep playing!</span></div><div class="progress-track"><div id="winProgress" class="progress-fill"></div></div></div>
+        <div class="stat-grid">
+          <div class="stat-box"><span class="stat-icon win-icon">🏆</span><span class="stat-number" id="winsCount">0</span><span class="stat-caption">WINS</span></div>
+          <div class="stat-box"><span class="stat-icon loss-icon">✕</span><span class="stat-number" id="lossesCount">0</span><span class="stat-caption">LOSSES</span></div>
+          <div class="stat-box"><span class="stat-icon draw-icon">＝</span><span class="stat-number" id="drawsCount">0</span><span class="stat-caption">DRAWS</span></div>
+          <div class="stat-box"><span class="stat-icon games-icon">◷</span><span class="stat-number" id="gamesCount">0</span><span class="stat-caption">MATCHES</span></div>
+        </div>
+        <div class="recent-heading"><span class="section-label">MATCH MOMENTUM</span><span class="pulse-dot"></span></div>
+        <div id="momentum" class="momentum"><span class="momentum-empty">Your story starts here.</span></div>
+        <div class="achievement"><span class="achievement-icon">✧</span><div><b id="achievementTitle">First steps</b><p id="achievementText">Play your first match to start your streak.</p></div></div>
+      </aside>
+    </section>
+    <footer class="footer"><span>© 2026 NEONPLAY ARCADE</span><span>MADE FOR FRIENDLY COMPETITION <span class="footer-heart">♥</span></span><span>BUILT WITH HTML · CSS · JS</span></footer>
+  </main>
+
+  <div id="resultOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+    <div class="result-modal">
+      <button id="closeResult" class="modal-close" aria-label="Close result">×</button>
+      <div id="resultEmoji" class="result-emoji">🏆</div>
+      <div class="eyebrow">MATCH COMPLETE</div>
+      <h2 id="resultTitle">Victory!</h2>
+      <p id="resultSubtitle">Beautifully played.</p>
+      <div class="result-score"><div><span id="resultXLabel">YOU</span><strong id="resultXScore">0</strong></div><span class="result-divider">—</span><div><span id="resultOLabel">AI BOT</span><strong id="resultOScore">0</strong></div></div>
+      <button id="playAgainBtn" class="primary-button modal-play">↻ Continue playing <span class="button-arrow">↗</span></button>
+      <button id="keepPlayingBtn" class="text-button">Stop playing</button>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
